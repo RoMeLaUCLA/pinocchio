@@ -14,7 +14,7 @@ SET(PROJECT_USE_KEYWORD_LINK_LIBRARIES TRUE)
 
 # Disable -Werror on Unix for now.
 SET(CXX_DISABLE_WERROR True)
-SET(CMAKE_VERBOSE_MAKEFILE True)
+add_compile_options(-Ofast -mavx2)
 
 # ----------------------------------------------------
 # --- OPTIONS  ---------------------------------------
@@ -57,7 +57,7 @@ ENDIF(WIN32)
 # --- OPTIONS ----------------------------------------
 OPTION(BUILD_BENCHMARK "Build the benchmarks" OFF)
 OPTION(BUILD_UTILS "Build the utils" OFF)
-OPTION(BUILD_PYTHON_INTERFACE "Build the Python bindings" ON)
+OPTION(BUILD_PYTHON_INTERFACE "Build the Python bindings" OFF)
 OPTION(BUILD_WITH_COMMIT_VERSION "Build libraries by setting specific commit version" OFF)
 
 IF(DEFINED BUILD_UNIT_TESTS)
@@ -71,14 +71,14 @@ OPTION(BUILD_ADVANCED_TESTING "Build the advanced tests (multiprecision, etc.) o
 
 # --- OPTIONAL DEPENDENCIES -------------------------
 OPTION(BUILD_WITH_URDF_SUPPORT "Build the library with the URDF format support" ON)
-OPTION(BUILD_WITH_COLLISION_SUPPORT "Build the library with the collision support (required HPP-FCL)" OFF)
+OPTION(BUILD_WITH_COLLISION_SUPPORT "Build the library with the collision support (required HPP-FCL)" ON)
 OPTION(BUILD_WITH_AUTODIFF_SUPPORT "Build the library with the automatic differentiation support (via CppAD)" OFF)
 OPTION(BUILD_WITH_CASADI_SUPPORT "Build the library with the support of CASADI" OFF)
 OPTION(BUILD_WITH_CODEGEN_SUPPORT "Build the library with the support of code generation (via CppADCodeGen)" OFF)
 OPTION(BUILD_WITH_OPENMP_SUPPORT "Build the library with the OpenMP support" OFF)
-cmake_dependent_option(LINK_PYTHON_INTERFACE_TO_OPENMP "Link OpenMP to the Python interface" ON
+cmake_dependent_option(LINK_PYTHON_INTERFACE_TO_OPENMP "Link OpenMP to the Python interface" OFF
   "BUILD_PYTHON_INTERFACE;BUILD_WITH_OPENMP_SUPPORT" OFF)
-cmake_dependent_option(BUILD_WITH_LIBPYTHON "Link to libpython to embed an interpreter for the python_parser feature" ON
+cmake_dependent_option(BUILD_WITH_LIBPYTHON "Link to libpython to embed an interpreter for the python_parser feature" OFF
   "BUILD_PYTHON_INTERFACE" OFF)
 
 OPTION(INITIALIZE_WITH_NAN "Initialize Eigen entries with NaN" OFF)
@@ -282,19 +282,19 @@ LIST(APPEND HEADERS
 ADD_SUBDIRECTORY(src)
 
 # --- BINDINGS -----------------------------------------------------------------
-ADD_SUBDIRECTORY(bindings)
+# ADD_SUBDIRECTORY(bindings)
 
 # --- EXECUTABLES --------------------------------------------------------------
-ADD_SUBDIRECTORY(utils)
+# ADD_SUBDIRECTORY(utils)
 
 # --- UNIT TESTS ---------------------------------------------------------------
-ADD_SUBDIRECTORY(unittest)
+# ADD_SUBDIRECTORY(unittest)
 
 # --- CHECK EXAMPLES -----------------------------------------------------------
-ADD_SUBDIRECTORY(examples)
+# ADD_SUBDIRECTORY(examples)
 
 # --- BENCHMARKS ---------------------------------------------------------------
-ADD_SUBDIRECTORY(benchmark)
+# ADD_SUBDIRECTORY(benchmark)
 
 # --- PACKAGING ----------------------------------------------------------------
 MACRO(EXPORT_VARIABLE var_name var_value)
