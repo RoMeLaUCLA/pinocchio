@@ -279,6 +279,7 @@ LIST(APPEND HEADERS
      ${${PROJECT_NAME}_BINARY_DIR}/include/${PROJECT_NAME}/warning.hpp)
 
 # --- MAIN LIBRARY -------------------------------------------------------------
+set(CMAKE_VERBOSE_MAKEFILE OFF)
 ADD_SUBDIRECTORY(src)
 
 # --- BINDINGS -----------------------------------------------------------------
